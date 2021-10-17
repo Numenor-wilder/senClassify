@@ -16,7 +16,7 @@ model 词向量模型保存路径
 embedding embedding保存路径   
 
 
-# 资源文件
+# 训练数据
 
 data 训练数据，包括训练数据和标签数据  
 
