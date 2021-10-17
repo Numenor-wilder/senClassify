@@ -1,6 +1,3 @@
-resources/embedding
-resources/model
-resources/text
-resources/raw_data
+resources/*
 __pycache__
 data
