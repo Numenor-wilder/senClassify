@@ -7,7 +7,7 @@
 
 ├─resources  
 │  ├─embedding  embedding保存路径  
-│  │  └─fasttext
+│  │  └─fasttext  
 │  ├─model  词向量模型保存路径  
 │  │  ├─fasttext  
 │  │  └─word2vec  
