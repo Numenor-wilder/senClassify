@@ -6,7 +6,7 @@
 # 资源文件
 
 raw_data\ww 原始推文数据  
-text 推文文本相关
+text 推文文本相关  
 |--fenci  
    |--dict 分词字典  
    |--tweets 单个用户推文时间线  
