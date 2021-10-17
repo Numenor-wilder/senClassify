@@ -5,15 +5,20 @@
 
 # 资源文件
 
-raw_data\ww 原始推文数据  
-text 推文文本相关  
-|--fenci  
-   |--dict 分词字典  
-   |--tweets 单个用户推文时间线  
-   |--word_seg 分词结果  
-|--tweets_bert  
-model 词向量模型保存路径  
-embedding embedding保存路径   
+├─resources
+│  ├─embedding  embedding保存路径  
+│  │  └─fasttext
+│  ├─model  词向量模型保存路径  
+│  │  ├─fasttext
+│  │  └─word2vec
+│  ├─raw_data
+│  │  └─ww  原始推文数据   
+│  └─text
+│      ├─fenci
+│      │  ├─dict 分词字典  
+│      │  ├─tweets 单个用户推文时间线  
+│      │  └─word_seg 分词结果  
+│      └─tweets_bert
 
 
 # 训练数据
