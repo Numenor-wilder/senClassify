@@ -58,7 +58,7 @@ def clean_character(sentence):
         sentence = re.sub("^@[A-Za-z0-9_]+", r'', sentence)
     
     sentence = re.sub('[A-Za-z\s.,:!?]{5,}$|^[A-Za-z\s.,:!?]{6,}', '', sentence)
-
+    sentence = re.sub('#', '', sentence)
     new_sentence = ''.join(sentence.split())  # 去除首尾空白
 
     return new_sentence
