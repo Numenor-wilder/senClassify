@@ -2,8 +2,8 @@ import re
 import os
 import json
 
-RAW_TWEET='./ww/'
-TWEET = './tweets_bert/'
+RAW_TWEET='./resources/raw_data/ww/'
+TWEET = './resources/text/tweets_bert/'
 
 
 def clean_tweet():
@@ -36,17 +36,31 @@ def clean_character(sentence):
     :param sentence:
     :return:
     '''
-    pattern1 = '^[@A-Za-z0-9_\s]+'
-    pattern2 = '^[^\u4e00-\u9fa5]+'
-    pattern3 = re.compile(u"http\S+")
-    pattern4 = re.compile(u"#\S+")
-    pattern5 = '["\U0001F600-\U0001F64F\U0001F300-\U0001F5FF\U0001F680-\U0001F6FF\U0001F1E0-\U0001F1FF"]'
-    line1 = re.sub(pattern1, '', sentence)  # 去除开头@
-    line2 = re.sub(pattern2, '', line1)  # 去除开头其他非汉字字符
-    line3 = re.sub(pattern3, '', line2)  # 去除超链接
-    line4 = re.sub(pattern4, '', line3)  # 去掉hashtag
-    line5 = re.sub(pattern5, '', line4)  # 去掉表情
-    new_sentence = ''.join(line5.split())  # 去除空白
+    
+    at_pattern = "^@[A-Za-z0-9_]+ |(@[A-Za-z0-9_]+ ){2,}"
+    hash_pattern = "(#[\w]+\s){2,}|#[\w\s]+$|^(#[\w]+ )|(＃[\w]+\s){2,}|＃[\w\s]+$|^(＃[\w]+ )"
+    http_pattern = re.compile("http\S+")
+    emoji_pattern = re.compile(pattern = "["
+        u"\U0001F600-\U0001F64F"  # emoticons
+        u"\U0001F300-\U0001F5FF"  # symbols & pictographs
+        u"\U0001F680-\U0001F6FF"  # transport & map symbols
+        u"\U0001F1E0-\U0001F1FF"  # flags (iOS)
+                           "]+", flags = re.UNICODE)
+
+    sentence = re.sub(http_pattern, '', sentence)  # 去除超链接
+    sentence = re.sub(emoji_pattern, '', sentence)  # 去除emoji
+
+    sentence = re.sub("\s\s(#|＃)[\w ]+((#|＃)[\w\s]+){1,}", '', sentence) # 去除#
+    sentence = re.sub(hash_pattern, '', sentence) # 去除#
+    sentence = re.sub(at_pattern, '', sentence) # 去除@
+    
+    while(re.match("^@[A-Za-z0-9_]+", sentence)):
+        sentence = re.sub("^@[A-Za-z0-9_]+", r'', sentence)
+    
+    sentence = re.sub('[A-Za-z\s.,:!?]{5,}$|^[A-Za-z\s.,:!?]{6,}', '', sentence)
+
+    new_sentence = ''.join(sentence.split())  # 去除首尾空白
+
     return new_sentence
 
 
