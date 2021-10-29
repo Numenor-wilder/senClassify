@@ -2,8 +2,11 @@ import re
 import os
 import json
 
+from bert_serving.client import BertClient
+
 RAW_TWEET='./resources/raw_data/ww/'
 TWEET = './resources/text/tweets_bert/'
+
 
 
 def clean_tweet():
@@ -59,10 +62,12 @@ def clean_character(sentence):
     
     sentence = re.sub('[A-Za-z\s.,:!?]{5,}$|^[A-Za-z\s.,:!?]{6,}', '', sentence)
     sentence = re.sub('#', '', sentence)
-    new_sentence = ''.join(sentence.split())  # 去除首尾空白
+    new_sentence = ''.join(sentence.strip())  # 去除首尾空白
 
     return new_sentence
 
 
 if __name__ == '__main__':
-    clean_tweet()
+    bc = BertClient()
+    vec = bc.encode(['一個有趣的人往往才能帶來有趣的作品，這裡的有趣不是指好笑或是幽默感之類的東西，有些時候反而是一些聽上去有點古板的東西，例如誠實地面對自己。在這篇的簡短介紹文中，我看到了有趣的東西。'])
+    print(vec)
