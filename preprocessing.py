@@ -22,9 +22,6 @@ def count_share(path):
     
     return attitude_triplet
 
-
-
-
 def clean_data():
     return    
 
