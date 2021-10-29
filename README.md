@@ -5,26 +5,26 @@
 
 # 资源文件
 
-├─corpus  语料库保存
-│  └─dic  字典保存
+├─corpus  语料库保存  
+│  └─dic  字典保存  
 ├─embedding  embedding保存  
-│  └─fasttext       
-├─model
+│  └─fasttext  
+├─model  
 │  ├─classifier  分类器模型保存  
 │  ├─embedding  词向量模型保存  
-│  │  ├─doc2vec     
-│  │  └─fasttext    
-│  └─tfidf  TF-IDF模型
-├─raw_data
+│  │  ├─doc2vec  
+│  │  └─fasttext  
+│  └─tfidf  TF-IDF模型  
+├─raw_data  
 │  └─ww   原始推文数据  
-└─text
-    ├─fenci
+└─text  
+    ├─fenci  
     │  ├─dict  分词字典  
     │  └─word_seg  分词结果  
-    │      ├─debug
-    │      ├─test
-    │      └─ww_202110
-    └─tweets_bert
+    │      ├─debug  
+    │      ├─test  
+    │      └─ww_202110  
+    └─tweets_bert  
 
 
 # 训练数据
