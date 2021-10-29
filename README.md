@@ -27,22 +27,6 @@
     └─tweets_bert
 
 
-├─resources  
-│  ├─embedding
-│  │  └─fasttext  
-│  ├─model  词向量模型保存路径  
-│  │  ├─fasttext  
-│  │  └─word2vec  
-│  ├─raw_data  
-│  │  └─ww  原始推文数据   
-│  └─text  
-│      ├─fenci  
-│      │  ├─dict 分词字典  
-│      │  ├─tweets 单个用户推文时间线  
-│      │  └─word_seg 分词结果  
-│      └─tweets_bert  
-
-
 # 训练数据
 
 data 训练标签数据  
