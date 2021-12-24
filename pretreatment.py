@@ -4,6 +4,7 @@ import json
 import re
 import datetime
 
+import implicit_treatment
 from parameter import path
 
 import jieba
@@ -49,18 +50,29 @@ def get_stopwords(file_path):
     return stopwords
 
 
-def segment(filepath, dataname, stopwords):
+def segment(filepath, dataname, stopwords, mode='normal'):
+    '''
+    :param filepath:
+    :param dataname:
+    :param stopwords:
+    :param mode: normal->默认，implicit或其他->隐式特征
+    :return:
+    '''
+    implicit = implicit_treatment.ImplicitExtractor()  # 提取器
+
     in_dir = r'fenci\word_seg'
     
     seg_prefix = os.path.join(path.TEXT_PATH, in_dir)
     if not os.path.exists(seg_prefix):
         os.mkdir(seg_prefix)
 
-    os.path.join(path.TEXT_PATH, in_dir, dataname)
 
     seg_list = []
 
     seg_path = os.path.join(seg_prefix, dataname)
+    
+    if mode is not 'normal':
+        seg_path += '_implicit'
     if not os.path.exists(seg_path):
         os.makedirs(seg_path)
 
@@ -71,6 +83,13 @@ def segment(filepath, dataname, stopwords):
             js = json.loads(tw)
             if js['language'] == 'zh':
                 tr_txt = zhconv.convert(js["tweet"], 'zh-tw')
+                if mode == 'normal':
+                    pass
+                elif mode == 'implicit':
+                    if len(implicit.features_judgement(tr_txt))==0: # 额外的筛选方式
+                        continue
+                else:
+                    logging.warning("不支持的模式！继续按照normal模式执行...")
                 txt = clean_character(tr_txt)
                 word_list = pseg.cut(txt)
                 seg_list.append(word_list)
@@ -87,7 +106,12 @@ def segment(filepath, dataname, stopwords):
         seg_tweet.write(content)
     
 
-def pretreat(raw_data):
+def pretreat(raw_data, mode='normal'):
+    '''
+    :param raw_data:
+    :param mode: normal->默认，implicit或其他->隐式特征
+    :return:
+    '''
     jieba.set_dictionary('./resources/text/fenci/dict/traditional.txt')
     jieba.load_userdict('./resources/text/fenci/dict/user.txt')
 
@@ -102,11 +126,11 @@ def pretreat(raw_data):
     data_name = raw_data + '_' + curr_time
     for filename in files:
         src_path = os.path.join(path.RAW_PATH, raw_data, filename)
-        segment(src_path, data_name, stopwords)
+        segment(src_path, data_name, stopwords, mode)
 
 
 if __name__ == '__main__':
     logging.basicConfig(
         format='%(asctime)s : %(threadName)s : %(levelname)s : %(message)s',
         level=logging.INFO)
-    pretreat('ww')
+    pretreat('ww', mode='implicit')
